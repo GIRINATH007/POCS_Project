@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Coding Simulator | Interactive Waveform Visualizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">
+                <span class="title-icon">⚡</span>
+                <span class="title-text">Line Coding</span>
+                <span class="title-subtitle">Simulator</span>
+            </h1>
+            <p class="subtitle">Visualize Digital Signal Encoding Techniques in Real-Time</p>
+        </header>
+
+        <!-- Control Panel -->
+        <div class="control-panel glass">
+            <div class="panel-header">
+                <h2>🔧 Control Panel</h2>
+            </div>
+            
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label for="num-bits">Number of Bits</label>
+                    <input type="range" id="num-bits" min="4" max="20" value="10" class="slider">
+                    <span class="value-display" id="num-bits-value">10</span>
+                </div>
+                
+                <div class="control-group">
+                    <label for="samples-per-bit">Samples per Bit</label>
+                    <input type="range" id="samples-per-bit" min="50" max="200" value="100" step="10" class="slider">
+                    <span class="value-display" id="samples-per-bit-value">100</span>
+                </div>
+            </div>
+
+            <div class="bit-input-section">
+                <label for="bit-input">Binary Data Input</label>
+                <div class="input-wrapper">
+                    <input type="text" id="bit-input" placeholder="Enter bits (e.g., 1010101010)" class="bit-input">
+                    <button class="btn btn-clear" id="clear-btn">Clear</button>
+                </div>
+            <div class="bit-buttons">
+                <button class="btn btn-primary" id="generate-btn">🎲 Generate Random</button>
+                <button class="btn btn-secondary" id="encode-btn">🚀 Encode & Visualize</button>
+                <button class="btn btn-accent" id="spectral-btn">📊 Spectral Analysis</button>
+            </div>
+            </div>
+
+            <div class="info-box">
+                <p><strong>💡 Tip:</strong> You can manually enter binary data or generate random bits!</p>
+            </div>
+        </div>
+
+        <!-- Visualization Area -->
+        <div class="visualization-container">
+            <div id="waveform-chart" class="chart-container glass">
+                <div class="chart-loading" id="chart-loading">
+                    <div class="spinner"></div>
+                    <p>Preparing your waveforms...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spectral Efficiency Analysis -->
+        <div class="spectral-section" id="spectral-section" style="display: none;">
+            <div class="section-header glass">
+                <h2>📊 Spectral Efficiency Analysis</h2>
+                <p>Power Spectral Density (PSD) and Efficiency Metrics Comparison</p>
+            </div>
+
+            <!-- PSD Visualization -->
+            <div class="spectral-chart-container glass">
+                <div id="psd-chart" class="chart-container">
+                    <div class="chart-loading" id="psd-loading">
+                        <div class="spinner"></div>
+                        <p>Analyzing spectral characteristics...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metrics Comparison Table -->
+            <div class="metrics-container glass">
+                <h3>📈 Spectral Efficiency Metrics</h3>
+                <div class="metrics-grid" id="metrics-grid">
+                    <!-- Metrics will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Encoding Schemes Info -->
+        <div class="schemes-grid">
+            <div class="scheme-card glass" data-scheme="nrz-l">
+                <div class="scheme-icon">📊</div>
+                <h3>NRZ-L</h3>
+                <p class="scheme-name">Non-Return-to-Zero-Level</p>
+                <div class="scheme-details">
+                    <p><strong>1</strong> → +V</p>
+                    <p><strong>0</strong> → -V</p>
+                </div>
+            </div>
+
+            <div class="scheme-card glass" data-scheme="rz">
+                <div class="scheme-icon">📈</div>
+                <h3>RZ</h3>
+                <p class="scheme-name">Return-to-Zero</p>
+                <div class="scheme-details">
+                    <p><strong>1</strong> → +V (half), 0 (half)</p>
+                    <p><strong>0</strong> → -V (half), 0 (half)</p>
+                </div>
+            </div>
+
+            <div class="scheme-card glass" data-scheme="manchester">
+                <div class="scheme-icon">📉</div>
+                <h3>Manchester</h3>
+                <p class="scheme-name">Manchester Encoding</p>
+                <div class="scheme-details">
+                    <p><strong>1</strong> → Low-to-High</p>
+                    <p><strong>0</strong> → High-to-Low</p>
+                </div>
+            </div>
+
+            <div class="scheme-card glass" data-scheme="ami">
+                <div class="scheme-icon">📋</div>
+                <h3>AMI</h3>
+                <p class="scheme-name">Alternate Mark Inversion</p>
+                <div class="scheme-details">
+                    <p><strong>0</strong> → 0V</p>
+                    <p><strong>1</strong> → Alternates ±V</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
+
